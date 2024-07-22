@@ -1,0 +1,41 @@
+@import '../styles/abstracts/variables';
+
+.Movie {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Movie-poster {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.Movie-placeholder {
+  border-radius: 50%;
+  min-width: 70px;
+  min-height: 70px;
+  background-color: $secondary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  &::after {
+    content: 'IMG';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.Movie-wrapper-title-year {
+  text-align: left;
+}
+
+.Movie-year {
+  color: $secondary-color;
+}

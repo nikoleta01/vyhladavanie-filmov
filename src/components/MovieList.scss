@@ -1,0 +1,24 @@
+@import '../styles/abstracts/variables';
+
+.MovieList {
+  margin: auto;
+  width: 50%;
+}
+
+.MovieList-paragraph {
+  color: $secondary-color;
+}
+
+.MovieList-link {
+  text-decoration: none;
+  color: $input-font-color;
+}
+
+.MovieList-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+}

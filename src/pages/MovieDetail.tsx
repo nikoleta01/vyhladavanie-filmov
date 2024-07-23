@@ -3,29 +3,57 @@ import { useParams } from "react-router-dom";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import "./MovieDetail.scss";
-import { addFavoriteMovie } from "../redux/slices/movieSlice";
-import { fetchMovieDetailStart } from "../redux/slices/movieDetailSlice";
-import { MovieDetailState } from "../redux/types";
+import {
+  addFavoriteMovie,
+  removeFavoriteMovie,
+} from "../redux/slices/movieSlice";
+import {
+  fetchMovieDetailStart,
+  resetMovieDetail,
+} from "../redux/slices/movieDetailSlice";
+import { MovieDetailState, MovieState } from "../redux/types";
 
 const MovieDetail = () => {
   const { id } = useParams<{ id: string }>();
 
   const dispatch = useDispatch();
-  const movieDetail = useSelector(
-    (state: { movieDetail: MovieDetailState }) => state.movieDetail.movieDetail,
+  const favoriteMovies = useSelector(
+    (state: { movies: MovieState }) => state.movies.favoriteMovies,
+  );
+  const { movieDetail, loading } = useSelector(
+    (state: { movieDetail: MovieDetailState }) => state.movieDetail,
   );
 
   const handleAddFavorite = () => {
     if (id) {
-      dispatch(addFavoriteMovie({ imdbId: id }));
+      dispatch(
+        addFavoriteMovie({
+          imdbId: id,
+          poster: movieDetail.Poster,
+          year: movieDetail.Year,
+          title: movieDetail.Title,
+        }),
+      );
+    }
+  };
+
+  const handleRemoveFavorite = () => {
+    if (id) {
+      dispatch(removeFavoriteMovie({ imdbId: id }));
     }
   };
 
   useEffect(() => {
+    dispatch(resetMovieDetail());
+
     if (id) {
       dispatch(fetchMovieDetailStart({ imdbId: id }));
     }
   }, [id, dispatch]);
+
+  const isFavorite = id
+    ? favoriteMovies.some((movie) => movie.imdbId === id)
+    : false;
 
   const detailsObject = {
     Actors: movieDetail.Actors,
@@ -53,38 +81,47 @@ const MovieDetail = () => {
 
   return (
     <div className="MovieDetail-container">
-      <div className="MovieDetail-heading-favorite-wrapper">
-        <h1>{movieDetail.Title}</h1>
-        <IoHeartOutline onClick={handleAddFavorite} size={40} />
-        {/*<IoHeart />*/}
-      </div>
-      <hr className="MovieDetail-hr" />
-      <div className="MovieDetail-content">
-        <img src={movieDetail.Poster} alt="movie poster" />
-        <div className="MovieDetail-body">
-          {Object.entries(detailsObject).map(([key, value]) => (
-            <div className="MovieDetail-row" key={key}>
-              <div className="MovieDetail-label">{key}:</div>
-              {key !== "Ratings" ? (
-                <div className="MovieDetail-value">
-                  {Array.isArray(value) ? value.join(", ") : value}
-                </div>
-              ) : (
-                movieDetail.Ratings &&
-                movieDetail.Ratings.length > 0 && (
-                  <div className="MovieDetail-value">
-                    {movieDetail.Ratings.map((rating, index) => (
-                      <div key={index}>
-                        {rating.Source}: {rating.Value}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div className="MovieDetail-heading-favorite-wrapper">
+            <h1>{movieDetail.Title}</h1>
+            {isFavorite ? (
+              <IoHeart onClick={handleRemoveFavorite} size={40} />
+            ) : (
+              <IoHeartOutline onClick={handleAddFavorite} size={40} />
+            )}
+          </div>
+          <hr className="MovieDetail-hr" />
+          <div className="MovieDetail-content">
+            <img src={movieDetail.Poster} alt="movie poster" />
+            <div className="MovieDetail-body">
+              {Object.entries(detailsObject).map(([key, value]) => (
+                <div className="MovieDetail-row" key={key}>
+                  <div className="MovieDetail-label">{key}:</div>
+                  {key !== "Ratings" ? (
+                    <div className="MovieDetail-value">
+                      {Array.isArray(value) ? value.join(", ") : value}
+                    </div>
+                  ) : (
+                    movieDetail.Ratings &&
+                    movieDetail.Ratings.length > 0 && (
+                      <div className="MovieDetail-value">
+                        {movieDetail.Ratings.map((rating, index) => (
+                          <div key={index}>
+                            {rating.Source}: {rating.Value}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )
-              )}
+                    )
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

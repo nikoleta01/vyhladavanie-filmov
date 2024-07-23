@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MovieState } from "../redux/types";
-import { fetchMoviesStart } from "../redux/slices/movieSlice";
+import { clearMovies, fetchMoviesStart } from "../redux/slices/movieSlice";
 import { IoIosSearch } from "react-icons/io";
 import "./Home.scss";
 import MovieList from "../components/MovieList";
@@ -13,6 +13,10 @@ const Home = () => {
   const { movies, loading, error } = useSelector(
     (state: { movies: MovieState }) => state.movies,
   );
+
+  useEffect(() => {
+    dispatch(clearMovies());
+  }, [dispatch]);
 
   const handleSearch = () => {
     if (searchTitle.length > 0) {

@@ -1,4 +1,4 @@
-import { MovieState, MovieType } from "../types";
+import { FavoriteMovieType, MovieState, MovieType } from "../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: MovieState = {
@@ -9,7 +9,7 @@ const initialState: MovieState = {
   title: "",
   totalPages: 0,
   imdbId: "",
-  favoriteMovies: [],
+  favoriteMovies: JSON.parse(localStorage.getItem("favoriteMovies") || "[]"),
 };
 
 const movieSlice = createSlice({
@@ -37,16 +37,35 @@ const movieSlice = createSlice({
       state.loading = false;
       state.error = action.payload.error;
     },
-    addFavoriteMovie(state, action: PayloadAction<{ imdbId: string }>) {
-      if (!state.favoriteMovies.includes(action.payload.imdbId)) {
-        state.favoriteMovies.push(action.payload.imdbId);
+    clearMovies(state) {
+      state.movies = [];
+      state.loading = false;
+      state.error = null;
+      state.page = 1;
+      state.title = "";
+      state.totalPages = 0;
+    },
+    addFavoriteMovie(state, action: PayloadAction<FavoriteMovieType>) {
+      const existingMovie = state.favoriteMovies.find(
+        (movie) => movie.imdbId === action.payload.imdbId,
+      );
+      if (!existingMovie) {
+        state.favoriteMovies.push(action.payload);
+        localStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(state.favoriteMovies),
+        );
       }
     },
-    /*removeFavorite(state, action: PayloadAction<string>) {
+    removeFavoriteMovie(state, action: PayloadAction<{ imdbId: string }>) {
       state.favoriteMovies = state.favoriteMovies.filter(
-        (id) => id !== action.payload.,
+        (movie) => movie.imdbId !== action.payload.imdbId,
       );
-    },*/
+      localStorage.setItem(
+        "favoriteMovies",
+        JSON.stringify(state.favoriteMovies),
+      );
+    },
   },
 });
 
@@ -55,6 +74,8 @@ export const {
   fetchMoviesSuccess,
   fetchMoviesFailure,
   addFavoriteMovie,
+  clearMovies,
+  removeFavoriteMovie,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

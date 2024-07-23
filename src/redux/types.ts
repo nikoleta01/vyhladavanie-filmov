@@ -48,7 +48,7 @@ export interface MovieState {
   page: number;
   totalPages: number;
   imdbId: string;
-  favoriteMovies: string[];
+  favoriteMovies: FavoriteMovieType[];
 }
 
 export interface MovieDetailState {
@@ -57,17 +57,10 @@ export interface MovieDetailState {
   movieDetail: MovieDetailType;
   imdbId: string;
 }
-//
-// interface FetchMoviesRequestAction {
-//   type: typeof FETCH_MOVIES_REQUEST;
-// }
-//
-// interface FetchMoviesSuccessAction {
-//   type: typeof FETCH_MOVIES_SUCCESS;
-//   payload: MovieType[];
-// }
-//
-// interface FetchMoviesFailureAction {
-//   type: typeof FETCH_MOVIES_FAILURE;
-//   payload: string;
-// }
+
+export type FavoriteMovieType = {
+  imdbId: string;
+  title: string;
+  poster: string;
+  year: string;
+};

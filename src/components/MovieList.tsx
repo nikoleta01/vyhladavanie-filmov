@@ -6,7 +6,6 @@ import { MovieType } from "../redux/types";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMoviesStart } from "../redux/slices/movieSlice";
 import { Link } from "react-router-dom";
-import { fetchMovieDetailStart } from "../redux/slices/movieDetailSlice";
 
 interface MovieListProps {
   loading: boolean;
@@ -14,7 +13,7 @@ interface MovieListProps {
   error: string | null;
 }
 
-const MovieList = ({ loading, movies, error }: MovieListProps) => {
+const MovieList = ({ loading, movies }: MovieListProps) => {
   const dispatch = useDispatch();
   const { totalPages, page, title } = useSelector(
     (state: {

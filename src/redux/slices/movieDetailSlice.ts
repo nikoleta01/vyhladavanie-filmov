@@ -47,6 +47,10 @@ const movieDetailSlice = createSlice({
       state.loading = false;
       state.movieDetail = action.payload.movieDetail;
     },
+    resetMovieDetail(state) {
+      state.loading = true;
+      state.movieDetail = initialState.movieDetail;
+    },
     fetchMovieDetailFailure(state, action: PayloadAction<{ error: string }>) {
       state.loading = false;
       state.error = action.payload.error;
@@ -58,6 +62,7 @@ export const {
   fetchMovieDetailStart,
   fetchMovieDetailSuccess,
   fetchMovieDetailFailure,
+  resetMovieDetail,
 } = movieDetailSlice.actions;
 
 export default movieDetailSlice.reducer;

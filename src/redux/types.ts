@@ -1,7 +1,3 @@
-// export const FETCH_MOVIES_REQUEST = "FETCH_MOVIES_REQUEST";
-// export const FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS";
-// export const FETCH_MOVIES_FAILURE = "FETCH_MOVIES_FAILURE";
-
 export interface MovieType {
   Title: string;
   Poster: string;
@@ -48,7 +44,7 @@ export interface MovieState {
   page: number;
   totalPages: number;
   imdbId: string;
-  favoriteMovies: string[];
+  favoriteMovies: MovieType[];
 }
 
 export interface MovieDetailState {
@@ -57,17 +53,3 @@ export interface MovieDetailState {
   movieDetail: MovieDetailType;
   imdbId: string;
 }
-//
-// interface FetchMoviesRequestAction {
-//   type: typeof FETCH_MOVIES_REQUEST;
-// }
-//
-// interface FetchMoviesSuccessAction {
-//   type: typeof FETCH_MOVIES_SUCCESS;
-//   payload: MovieType[];
-// }
-//
-// interface FetchMoviesFailureAction {
-//   type: typeof FETCH_MOVIES_FAILURE;
-//   payload: string;
-// }

@@ -12,7 +12,6 @@ import {
   fetchMovieDetailStart,
   fetchMovieDetailSuccess,
 } from "../slices/movieDetailSlice";
-import movieDetail from "../../pages/MovieDetail";
 
 interface FetchMoviesStartPayload {
   title: string;

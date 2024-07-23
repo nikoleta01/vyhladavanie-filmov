@@ -1,4 +1,4 @@
-import { FavoriteMovieType, MovieState, MovieType } from "../types";
+import { MovieState, MovieType } from "../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: MovieState = {
@@ -45,9 +45,9 @@ const movieSlice = createSlice({
       state.title = "";
       state.totalPages = 0;
     },
-    addFavoriteMovie(state, action: PayloadAction<FavoriteMovieType>) {
+    addFavoriteMovie(state, action: PayloadAction<MovieType>) {
       const existingMovie = state.favoriteMovies.find(
-        (movie) => movie.imdbId === action.payload.imdbId,
+        (movie) => movie.imdbID === action.payload.imdbID,
       );
       if (!existingMovie) {
         state.favoriteMovies.push(action.payload);
@@ -59,7 +59,7 @@ const movieSlice = createSlice({
     },
     removeFavoriteMovie(state, action: PayloadAction<{ imdbId: string }>) {
       state.favoriteMovies = state.favoriteMovies.filter(
-        (movie) => movie.imdbId !== action.payload.imdbId,
+        (movie) => movie.imdbID !== action.payload.imdbId,
       );
       localStorage.setItem(
         "favoriteMovies",

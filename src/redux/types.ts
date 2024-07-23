@@ -1,7 +1,3 @@
-// export const FETCH_MOVIES_REQUEST = "FETCH_MOVIES_REQUEST";
-// export const FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS";
-// export const FETCH_MOVIES_FAILURE = "FETCH_MOVIES_FAILURE";
-
 export interface MovieType {
   Title: string;
   Poster: string;
@@ -48,7 +44,7 @@ export interface MovieState {
   page: number;
   totalPages: number;
   imdbId: string;
-  favoriteMovies: FavoriteMovieType[];
+  favoriteMovies: MovieType[];
 }
 
 export interface MovieDetailState {
@@ -57,10 +53,3 @@ export interface MovieDetailState {
   movieDetail: MovieDetailType;
   imdbId: string;
 }
-
-export type FavoriteMovieType = {
-  imdbId: string;
-  title: string;
-  poster: string;
-  year: string;
-};

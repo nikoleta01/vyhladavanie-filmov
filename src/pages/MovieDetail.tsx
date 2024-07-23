@@ -28,10 +28,10 @@ const MovieDetail = () => {
     if (id) {
       dispatch(
         addFavoriteMovie({
-          imdbId: id,
-          poster: movieDetail.Poster,
-          year: movieDetail.Year,
-          title: movieDetail.Title,
+          imdbID: id,
+          Poster: movieDetail.Poster,
+          Year: movieDetail.Year,
+          Title: movieDetail.Title,
         }),
       );
     }
@@ -52,7 +52,7 @@ const MovieDetail = () => {
   }, [id, dispatch]);
 
   const isFavorite = id
-    ? favoriteMovies.some((movie) => movie.imdbId === id)
+    ? favoriteMovies.some((movie) => movie.imdbID === id)
     : false;
 
   const detailsObject = {

@@ -1,8 +1,18 @@
 @import '../styles/abstracts/variables';
 
+$breakpoint-tablet: 765px;
+$breakpoint-big-screen: 1600px;
+
 .MovieList {
-  margin: auto;
+  margin: 0 auto;
   width: 50%;
+  @media (max-width: $breakpoint-tablet) {
+    width: 100%;
+  }
+  @media (min-width: $breakpoint-big-screen) {
+    width: 30%;
+  }
+  
 }
 
 .MovieList-paragraph {
